@@ -1,0 +1,7 @@
+FILES:
+  - path: Path\to\your\folder1 # support string or list, if you input is a list, it will combine as a one playlist file
+    name: Playlist1 # filename of the output for this path
+  - path: [Path\to\your\folder2, Path\to\your\folder3] # you can remove or add more paths
+    name: Playlist2
+NAME_FILTER: [] # it will ignore the files with these name, example: ["making"]
+AVAILABLE_SUFFIX: ["mkv","mp4","iso"] # it will find the files with these suffix, example: ["mkv","mp4","iso"]
