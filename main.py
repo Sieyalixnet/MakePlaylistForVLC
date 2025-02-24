@@ -11,13 +11,15 @@ CONFIG = {
 def find_paths_with_dirs(base_path)->List[Tuple[str,str]]:
     paths = []
     for root, dirs, files in os.walk(base_path):
-        if "BDMV" in dirs and "CERTIFICATE" in dirs:
-            print("Find BD: ", root)
-            paths.append(("BD",root.replace("\\","/")))
         for file in files:
             l:str = file.lower()
             suffix = l.split(".")[-1]
-            if any(name in l for name in CONFIG["NAME_FILTER"]):
+            if l == "index.bdmv" and "STREAM" in dirs:
+                real_path = root[:-5]
+                print("Find BD: ", real_path)
+                paths.append(("BD",real_path.replace("\\","/")))
+                break
+            elif any(name in l for name in CONFIG["NAME_FILTER"]):
                 print("Ignore file: ", os.path.join(root, file))
                 continue
             elif any(suffix == s for s in CONFIG["AVAILABLE_SUFFIX"]):
