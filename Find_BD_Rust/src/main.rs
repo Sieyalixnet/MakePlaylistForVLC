@@ -77,12 +77,12 @@ impl Config {
 fn find_paths_with_dirs(CONFIG: &Config,base_path: &str) -> Vec<(String, String)> {
     let mut paths = Vec::new();
     for entry in fs::read_dir(base_path).unwrap() {
-        let entry = entry.unwrap();
-        let path = entry.path();
+        let _entry = entry.unwrap();
+        let path = _entry.path();
         if path.is_file() {
             let file_name = path.file_name().unwrap().to_str().unwrap().to_lowercase();
             let suffix = file_name.split(".").last().unwrap().to_owned();
-            if file_name == "index.bdmv" && path.parent().unwrap().file_name().unwrap().to_str().unwrap().contains("STREAM") {
+            if file_name == "index.bdmv" && path.parent().unwrap().file_name().unwrap().to_str().unwrap().contains("BDMV") {
                 let real_path = path.parent().unwrap().parent().unwrap().to_str().unwrap().to_string();
                 println!("Find BD: {}", real_path);
                 paths.push(("BD".to_string(), real_path));
@@ -103,8 +103,6 @@ fn find_paths_with_dirs(CONFIG: &Config,base_path: &str) -> Vec<(String, String)
 
 fn main() -> io::Result<()> {
     let config_file = fs::read_to_string("config.yaml")?;
-    //let CONFIG = Config::new();
-    //TODO match一下
     let mut CONFIG:Config = Config::new();
     match serde_yml::from_str(&config_file){
         Ok(config) => {
